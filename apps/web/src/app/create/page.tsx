@@ -11,12 +11,18 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 
+const publicClient = usePublicClient()
+const walletClient = useWalletClient()
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { usePublicClient, useWalletClient } from "wagmi"
+import { Transaction, parseAbi } from "viem"
+import { useWriteContract } from "wagmi"
 
 const formSchema = z.object({
   daoname: z.string().min(3).max(20),
@@ -37,6 +43,8 @@ const formSchema = z.object({
 function CreatePage() {
   const [grantees, setGrantees] = useState([""])
   const [tokenholders, setTokenholders] = useState([""])
+
+  const { writeContract } = useWriteContract()
 
   const addGrantee = () => {
     setGrantees([...grantees, ""])
@@ -79,10 +87,16 @@ function CreatePage() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+    writeContract({
+      address: "0x1F98407AAeA6cAF4CfF4295A6273A4904e1F0Fea",
+      abi: parseAbi(["function newDao(string memory _id, string memory _name, string memory _symbol, address[] memory _holders, uint256[] memory _stakes, uint256[5] memory _votingSettings)"]),
+      functionName: "newDao",
+      args: [values.daoname, values.tokenname, values.tokensymbol, values.tokenholders.map((address) => address as `0x${string}`), values.tokenholdersamount.map((amount) => BigInt(amount)), [BigInt(values.minquorum), BigInt(values.votingdelay), BigInt(values.votingperiod), BigInt(values.timelockdelay), BigInt(0)]],
+    })
   }
 
   return (

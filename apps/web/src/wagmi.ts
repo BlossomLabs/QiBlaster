@@ -1,10 +1,10 @@
 import { http, createConfig } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
+import { base, mainnet, sepolia } from 'wagmi/chains'
 import { injected, walletConnect, metaMask } from 'wagmi/connectors'
 
 export function getConfig() {
   return createConfig({
-    chains: [mainnet, sepolia],
+    chains: [base],
     connectors: [
       // injected(),
       metaMask(),
@@ -12,8 +12,7 @@ export function getConfig() {
     ],
     ssr: true,
     transports: {
-      [mainnet.id]: http(),
-      [sepolia.id]: http(),
+      [base.id]: http(),
     },
   })
 }

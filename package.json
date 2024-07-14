@@ -23,5 +23,5 @@
     "bun": ">=1.0.0"
   },
   "packageManager": "bun@1.1.0",
-  "dependencies": {}
+  "dependencies": { "@openzeppelin/contracts": "^5.0.2" }
 }

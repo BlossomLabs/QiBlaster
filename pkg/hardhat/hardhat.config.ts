@@ -2,11 +2,23 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox-viem";
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.19",
+  solidity: {
+    version: "0.8.20",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  },
   networks: {
-    localhost: {
-      chainId: 1337
-    },
+    hardhat: {
+      chainId: 31337,
+      forking: {
+        url: "https://base-mainnet.g.alchemy.com/v2/3LysSMOLSvQ_8o4-WNexp8SydfO9Mm07",
+        blockNumber: 17070831
+      }
+    }
   },
 };
 
