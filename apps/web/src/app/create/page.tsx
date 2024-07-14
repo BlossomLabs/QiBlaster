@@ -92,7 +92,7 @@ function CreatePage() {
     // ✅ This will be type-safe and validated.
     console.log(values)
     writeContract({
-      address: "0x1F98407AAeA6cAF4CfF4295A6273A4904e1F0Fea",
+      address: "0x3868fdb9241d4daa1cbe4fbd036a04e12e9243c9",
       abi: parseAbi(["function newDao(string memory _id, string memory _name, string memory _symbol, address[] memory _holders, uint256[] memory _stakes, uint256[5] memory _votingSettings)"]),
       functionName: "newDao",
       args: [values.daoname, values.tokenname, values.tokensymbol, values.tokenholders.map((address) => address as `0x${string}`), values.tokenholdersamount.map((amount) => BigInt(amount)), [BigInt(values.minquorum), BigInt(values.votingdelay), BigInt(values.votingperiod), BigInt(values.timelockdelay), BigInt(0)]],

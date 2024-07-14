@@ -18,6 +18,11 @@ const config: HardhatUserConfig = {
         url: "https://base-mainnet.g.alchemy.com/v2/3LysSMOLSvQ_8o4-WNexp8SydfO9Mm07",
         blockNumber: 17070831
       }
+    },
+    base: {
+      chainId: 8453,
+      url: "https://base-mainnet.g.alchemy.com/v2/3LysSMOLSvQ_8o4-WNexp8SydfO9Mm07",
+      accounts: [process.env.PRIVATE_KEY as string]
     }
   },
 };
